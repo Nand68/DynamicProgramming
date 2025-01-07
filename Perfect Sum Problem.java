@@ -77,3 +77,54 @@ class Solution {
         return dp[n-1][target];
     }
 }
+
+// space optimization
+
+class Solution {
+    // Function to calculate the number of subsets with a given sum
+    public int perfectSum(int[] arr, int target) {
+        int n = arr.length;
+        int[][] dp = new int[n][target+1];
+        int[] prev = new int[target+1];
+        
+        for(int i = 0; i < target + 1; i++){
+            if ( i == 0 && arr[0] == 0){
+                prev[i] = 2;
+            }
+            else if ( i == 0){
+                prev[i] = 1;
+            }
+            else if(arr[0] == i){
+                prev[i] = 1;
+            }
+            else{
+                prev[i] = 0;
+            }
+        }
+        for ( int i = 1; i < n; i++){
+            int[] cur = new int[target + 1];
+            for ( int j = 0; j < target + 1; j++){
+                    int pick = 0;
+                    if(arr[i] <= j){
+                        pick = prev[j-arr[i]]; //solve(arr,j-arr[i],i-1,dp);
+                    }
+                        
+                    int notpick = prev[j]; //solve(arr,j,i-1,dp);
+                    cur[j] = pick + notpick;
+            }
+            prev = cur;
+        }
+        
+        return prev[target];
+    }
+}
+
+// simple rule while optimizing
+/* 
+make prev first
+make cur after that in nested loop
+i - 1 with prev
+i with cur
+after one loop change prev = cur
+
+*/
