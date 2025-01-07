@@ -64,6 +64,51 @@ class Solution {
       return pick || notpick;
   }
 }
+
+// bottom up 
+class Solution {
+  public static boolean checkSubsequenceSum(int N, int[] arr, int K) {
+      int[][] dp = new int[N][K+1];
+      for(int i = 0; i < N; i++){
+          dp[i][0] = 1;
+      }
+      for(int i = 1; i <= K; i++){
+          if(i == arr[0]){
+             dp[0][i] = 1;
+          }
+          else{
+             dp[0][i] = 2;
+          }
+      }
+      for(int i = 1;i < N; i++){
+          for(int j = 1; j <= K; j++){
+            int pick = 2;
+                if ( arr[i] <= j){
+                    pick = dp[i-1][j-arr[i]];//solve(arr,j-arr[i],i-1,dp);
+                        if (pick == 1){
+                            dp[i][j] = 1;
+                            continue;
+                        }
+                        else{
+                            dp[i][j] = 2;
+                        }
+                }
+                int notpick = dp[i-1][j]; //solve(arr,j,i-1,dp);
+
+                if (notpick == 1){
+                    dp[i][j] = 1;
+                }
+                else{
+                    dp[i][j] = 2;
+                }
+                
+          }
+      }
+      return (dp[N-1][K] == 1);
+  }
+}
+ 
+     
      
   
      
