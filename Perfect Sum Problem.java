@@ -42,3 +42,38 @@ class Solution {
         return pick + notpick;
     }
 }
+// bottom up 
+class Solution {
+    // Function to calculate the number of subsets with a given sum
+    public int perfectSum(int[] arr, int target) {
+        int n = arr.length;
+        int[][] dp = new int[n][target+1];
+        for(int i = 0; i < target + 1; i++){
+            if ( i == 0 && arr[0] == 0){
+                dp[0][i] = 2;
+            }
+            else if ( i == 0){
+                dp[0][i] = 1;
+            }
+            else if(arr[0] == i){
+                dp[0][i] = 1;
+            }
+            else{
+                dp[0][i] = 0;
+            }
+        }
+        for ( int i = 1; i < n; i++){
+            for ( int j = 0; j < target + 1; j++){
+                    int pick = 0;
+                    if(arr[i] <= j){
+                        pick = dp[i-1][j-arr[i]]; //solve(arr,j-arr[i],i-1,dp);
+                    }
+                        
+                    int notpick = dp[i-1][j]; //solve(arr,j,i-1,dp);
+                    dp[i][j] = pick + notpick;
+            }
+        }
+        
+        return dp[n-1][target];
+    }
+}
