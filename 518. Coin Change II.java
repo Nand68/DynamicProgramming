@@ -27,3 +27,34 @@ class Solution {
         return ans;
     }
 }
+
+// using memo 
+
+class Solution {
+    public int cutRod(int[] price) {
+        int n = price.length;
+        int[][] dp = new int[n][n+1];
+        for(int i = 0; i < n; i++){
+            Arrays.fill(dp[i],-1);
+        }
+        return solve(n,price,n-1,dp);
+    }
+    public int solve(int N,int[] price ,int index, int[][] dp){
+        if(index == 0){
+            dp[index][N] = N*price[index];
+            return N*price[index];
+        }
+        if( dp[index][N] != -1){
+            return dp[index][N];
+        }
+        int pick = 0;
+        int curlen = index + 1;
+        if ( curlen <= N){
+            pick = price[index] + solve(N-curlen,price,index,dp);
+        }
+        int notpick = solve(N,price,index-1,dp);
+         dp[index][N] = Math.max(pick,notpick);
+        
+        return dp[index][N];
+    }
+}
