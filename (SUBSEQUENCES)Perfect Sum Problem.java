@@ -1,4 +1,5 @@
 // with memo
+// here it is simple as previous but we have 0 also in constrain so it is like we have to include 0 of middle also so for that base case will change lil bit
 class Solution {
     // Function to calculate the number of subsets with a given sum
     public int perfectSum(int[] nums, int target) {
